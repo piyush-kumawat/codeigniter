@@ -134,3 +134,8 @@ $autoload['language'] = array();
 */
 $autoload['model'] = array();
 
+
+/* jwt token authentication */
+
+$autoload['config'] = array('jwt');
+

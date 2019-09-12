@@ -3,9 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <script>
 	// function render(id) {
-  //   
-  // }
-	</script>
+	//   
+	// }
+</script>
 <!DOCTYPE html>
 <style>
 	::selection {
@@ -94,41 +94,63 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		height: 35px;
 		background: darkgray;
 	}
+
 	p.footer_pera {
+		text-align: center;
+		font-size: 20px;
+		color: rebeccapurple;
+	}
+	.logoutbtn {
+    float: right;
+    background: aquamarine;
+    width: 69px;
+    height: 32px;
     text-align: center;
-    font-size: 20px;
-    color: rebeccapurple;
+    border-radius: 10px;
+		position: relative;
+    right: 40px;
+ }
+a.logouttxt {
+    color: red;
+    font-size: 14px;
+    position: relative;
+    top: 5px;
+    text-decoration: none;
 }
 </style>
 
 
 
-	<div id="container">
-		<h1>Form Records </h1>
-    <a href="<?=site_url('Form'); ?>">Add New Record</a>
-		<div id="body">
-       <table>
-				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Email</th>
-					<th>Contact</th>
-					<th>Gender</th>
-					<th>Country</th>
-					<th>State</th>
-					<th>City</th>
-					<th>Address</th>
-					<th>Subjects</th>
-					<th>Skils</th>
-					<th>Edit</th>
-					<th>Delete</th>
-				
-				</tr>
-				<?php
-				foreach ($regis as $list) :
-					?>
-				<?php
-					echo "<tr>
+<div id="container">
+	<h1>Form Records </h1>
+	<a href="<?= site_url('Form'); ?>">Add New Record</a>
+	<div class="logoutbtn">
+		<a href="<?= site_url(''); ?>" class="logouttxt">Logout</a>
+	</div>
+
+	<div id="body">
+		<table>
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Contact</th>
+				<th>Gender</th>
+				<th>Country</th>
+				<th>State</th>
+				<th>City</th>
+				<th>Address</th>
+				<th>Subjects</th>
+				<th>Skils</th>
+				<th>Edit</th>
+				<th>Delete</th>
+
+			</tr>
+			<?php
+			foreach ($regis as $list) :
+				?>
+			<?php
+				echo "<tr>
 									<td>{$list['fname']}</td>
 									<td>{$list['lname']}</td>
 									<td>{$list['email']}</td>
@@ -141,23 +163,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									<td>{$list['subject']}</td>
 									<td>{$list['skils']}</td>
 									<td>
-									<a class='btn btn-xs btn-info' href='".site_url('/UpdateRecord/edit/'.$list['id'])."'>
+									<a class='btn btn-xs btn-info' href='" . site_url('/UpdateRecord/edit/' . $list['id']) . "'>
 										 edit
 									</a></td>
 									<td>
-									<a class='btn btn-xs btn-info' href='".site_url('/UpdateRecord/edit/'.$list['id'])."'>
+									<a class='btn btn-xs btn-info' href='" . site_url('/UpdateRecord/delete/' . $list['id']) . "'>
 										 Delete
 									</a></td>
 			 					 </tr>";
 
-				 
-endforeach; ?>
-			</table>
 
-		</div>
+			endforeach; ?>
+		</table>
 
-		<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
 	</div>
 
-
-
+	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
+</div>

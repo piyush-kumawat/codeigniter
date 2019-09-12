@@ -15,7 +15,7 @@ class News_model extends CI_Model
 
   //-----get data by id--------------
   public function getdata($id)
-  {  
+  {
     $this->db->where('id', $id);
     $query = $this->db->get('regis');
     return $query->result_array();
@@ -44,65 +44,7 @@ class News_model extends CI_Model
       'subject' => $string_version,
       'skils' => $string_skils,
     );
-     
-    if ($id == 0) {
-      return $this->db->insert('regis', $data);
-    }else{
-      $this->db->where('id', $id);
-      return $this->db->update('regis', $data);
-    }
-   
-   
-
-  }
-
-  public function login()
-  {
-
-    $user = $this->input->post('user');
-    $pass = $this->input->post('pass');
-   
-    $this->db->where('email', $user);
-    $this->db->where('password', $pass);
-   
-    $query = $this->db->get('regis');
-    if ($query->num_rows() > 0) {
-      $row = $query->row();
-      if ($row->user_type == 'admin') {
-        $query->result_array();
-        return 2;
-      }
-      if ($row->user_type == 'student') {
-        $row = $query->row();
-        $data = array(
-          'id' => $row->id,
-          'fname' => $row->fname,
-          'lname' => $row->lname,
-          // 'gender' => $row->gender,
-          // 'contact' => $row->contact,
-          // 'country' => $row->country,
-          // 'state' => $row->state,
-          // 'city' => $row->city,
-          'email' => $row->email,
-          // 'address' => $row->address,
-          // 'subject' => $row->subject,
-          // 'skils' => $row->skils,
-        );
-        $this->session->set_userdata($data);
-        return 1;
-      }
-    } else {
-      return false;
-    }
-  }
-  public function update()
-  {
-    $subject = $this->input->post('subject');
-    $string_version = implode(',', $subject);
-    $skils = $this->input->post('skils');
-    $string_skils = implode(',', $skils);
-    $data = array(
-      'id' =>  $this->input->post('id'),
+    $data2 = array(
       'fname' => $this->input->post('fname'),
       'lname' => $this->input->post('lname'),
       'gender' => $this->input->post('gender'),
@@ -115,29 +57,100 @@ class News_model extends CI_Model
       'subject' => $string_version,
       'skils' => $string_skils,
     );
-    $this->db->where('id', $data['id']);
-    $this->session->set_userdata($data);
-    return $this->db->update('regis', $data);
+
+    if ($id == 0) {
+      return $this->db->insert('regis', $data);
+    } else {
+      $this->db->where('id', $id);
+      return $this->db->update('regis', $data2);
+    }
   }
 
-  public function setSessionData($id)
-  {
-    echo '$id';
-    die();
-    // $this->session->unset_userdata($data);
-    return true;
-  }
+  // public function login($params = array())
+  // {
 
-  // public function saveEmployee($id = 0)
-  //   {
- 
-       
-        
-  //       if ($id == 0) {
-  //           return $this->db->insert('employee', $data);
-  //       } else {
-  //           $this->db->where('id', $id);
-  //           return $this->db->update('employee', $data);
-  //       }
+  //   $user = $this->input->post('user');
+  //   $pass = $this->input->post('pass');
+
+  //   $this->db->where('email', $user);
+  //   $this->db->where('password', $pass);
+
+  //   $query = $this->db->get('regis');
+  //   if ($query->num_rows() > 0) {
+  //     $row = $query->row();
+  //     if ($row->user_type == 'admin') {
+  //       $query->result_array();
+  //       return 2;
+  //     }
+  //     if ($row->user_type == 'student') {
+  //       $row = $query->row();
+  //       $data = array(
+  //         'id' => $row->id,
+  //         'fname' => $row->fname,
+  //         'lname' => $row->lname,
+  //         // 'gender' => $row->gender,
+  //         // 'contact' => $row->contact,
+  //         // 'country' => $row->country,
+  //         // 'state' => $row->state,
+  //         // 'city' => $row->city,
+  //         'email' => $row->email,
+  //         // 'address' => $row->address,
+  //         // 'subject' => $row->subject,
+  //         // 'skils' => $row->skils,
+  //       );
+  //       $this->session->set_userdata($data);
+  //       return 1;
+  //     }
+  //   } else {
+  //     return false;
   //   }
+  // }
+
+  public function login($con)
+  {
+    //  return $con;
+    $this->db->where('email', $con['email']);
+    $this->db->where('password', $con['password']);
+    // $this->db->where('email', $params['conditions']['email']);
+    // $this->db->where('password', $params['conditions']['password']);
+    $query = $this->db->get('sbc_web_user');
+    if ($query->num_rows() > 0) {
+      $row = $query->row();
+      // if ($row->user_role == 'admin') {
+      //   $query2 = $this->db->get('regis');
+      //   $result = $query2->result_array();
+      //   return $result;
+      // }
+      if ($row->user_role == 'customer') {
+        $result = $query->result_array();
+        return $result;
+      }
+    }
+    
+  }
+  // if ($query->num_rows() > 0) {
+  //   $row = $query->row();
+
+  //   if ($row->user_type == 'student') {
+  //     $row = $query->row();
+  //     $data = array(
+  //       'id' => $row->id,
+  //       'fname' => $row->fname,
+  //       'lname' => $row->lname,
+  //       // 'gender' => $row->gender,
+  //       // 'contact' => $row->contact,
+  //       // 'country' => $row->country,
+  //       // 'state' => $row->state,
+  //       // 'city' => $row->city,
+  //       'email' => $row->email,
+  //       // 'address' => $row->address,
+  //       // 'subject' => $row->subject,
+  //       // 'skils' => $row->skils,
+  //     );
+  //     $this->session->set_userdata($data);
+  //     return 1;
+  //   }
+  // } else {
+  //   return false;
+  // }
 }
